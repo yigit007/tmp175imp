@@ -33,4 +33,4 @@ function tmpI2C(var)
     
 }
 
-agent.on("test1", tmpI2C);
+agent.on("temp", tmpI2C);
