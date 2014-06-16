@@ -1,11 +1,11 @@
 //Device code
+//mode <- -1;
 
 //Address pins are left floating
-local tmp175Address = 0x37;
-local addr = (tmp175Address << 1);
+//tmp175Address <- 0x37;
+addr <- (0x37 << 1);
 
-function tmpI2C(var)
-{
+function tmpI2C() {
     //configure i2c bus
     i2c <- hardware.i2c12;
     i2c.configure(CLOCK_SPEED_10_KHZ);
@@ -30,7 +30,11 @@ function tmpI2C(var)
         local temp = test1[0] + 0.0625*(test1[1]>>>4);
         agent.send("temp", temp);
     }
-    
 }
 
-agent.on("temp", tmpI2C);
+//Sleep 30 mins and wake up routine
+imp.onidle(function() {
+    tmpI2C();
+    //agent.on("temp", tmpI2C);
+    server.sleepfor(30*60);
+});
