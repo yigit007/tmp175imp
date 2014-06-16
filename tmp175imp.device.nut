@@ -37,17 +37,14 @@ function tmpI2C(var) {
     else {
         server.log("Read Error");
     }
-    readCfg();
+    //readCfg();
 }
 
 function readCfg() {
     server.log(i2c.read(addr,"\x01",1));
 }
 
-/*imp.onidle(function() {
-    tmpI2C();
-    server.sleepfor(20);    //sleep for 20 sec
-});*/
-
-//tmpI2C();
-agent.on("temp", tmpI2C);
+imp.onidle(function() {
+    tmpI2C(0);
+    server.sleepfor(15*60);    //sleep for 15 min
+});
